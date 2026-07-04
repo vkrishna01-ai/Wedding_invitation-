@@ -6,9 +6,9 @@ export const content = {
   weddingDetails: {
     type: 'Destination Wedding',
     state: 'Uttarakhand',
-    city: 'Mussoorie',
-    venue: 'The Grand Himalayan Resort',
-    address: 'Mall Road, Mussoorie, Uttarakhand',
+    city: 'Ramnagar',
+    venue: 'Corbett Tusker Trail',
+    address: 'Dhela Road, near Jim Corbett National Park, Ramnagar, Uttarakhand 244715',
     date: '17 February 2027',
     dateWritten: {
       day: 'The Seventeenth of February',
@@ -16,8 +16,11 @@ export const content = {
       weekday: 'Wednesday',
     },
     targetCountdown: '2027-02-17T21:00:00+05:30',
-    weather: '8°C – 18°C',
-    altitude: '2,005 metres',
+    weather: '15°C – 30°C',
+    altitude: '400 metres',
+    venueTagline: 'Your Perfect Forest Escape',
+    venueDescription:
+      'Nestled in the foothills of the mighty Himalayas, surrounded by the ancient forests of Jim Corbett — where the whisper of Sal trees and the song of wild birds create a symphony fit for the most magical of celebrations.',
   },
   invitation: {
     prefix: 'Together with their families',
@@ -51,7 +54,7 @@ export const content = {
       title: 'Welcome Dinner',
       date: '15 February',
       time: '7:00 PM',
-      venue: 'The Grand Himalayan Resort',
+      venue: 'Jim\'s Patio & Garden',
       dressCode: 'Elegant Casual',
     },
     {
@@ -59,7 +62,7 @@ export const content = {
       title: 'Haldi',
       date: '16 February',
       time: '10:30 AM',
-      venue: 'Sunrise Garden Lawn',
+      venue: 'Poolside Deck',
       dressCode: 'Yellow & White',
     },
     {
@@ -67,7 +70,7 @@ export const content = {
       title: 'Mehendi',
       date: '16 February',
       time: '3:00 PM',
-      venue: 'Glass Pavilion',
+      venue: 'Poolside Alfresco',
       dressCode: 'Pastel Traditional',
     },
     {
@@ -75,7 +78,7 @@ export const content = {
       title: 'Sangeet',
       date: '16 February',
       time: '8:00 PM',
-      venue: 'Royal Ballroom',
+      venue: 'Grand Banquet Hall',
       dressCode: 'Glamorous Ethnic',
     },
     {
@@ -83,7 +86,7 @@ export const content = {
       title: 'Wedding Ceremony',
       date: '17 February',
       time: '6:30 PM onwards',
-      venue: 'Grand Himalayan Lawn',
+      venue: 'Outdoor Garden',
       dressCode: 'Traditional',
     },
     {
@@ -91,15 +94,51 @@ export const content = {
       title: 'Reception',
       date: '18 February',
       time: '7:30 PM',
-      venue: 'Emerald Banquet Hall',
+      venue: 'Grand Banquet Hall',
       dressCode: 'Formal',
     },
   ],
+  destination: {
+    venues: [
+      {
+        id: 'outdoor-garden',
+        title: 'Outdoor Garden',
+        subtitle: 'The Wedding Ceremony',
+        description:
+          'An enchanting open-air garden surrounded by ancient Sal trees, where nature creates the most breathtaking mandap of all.',
+        image: '/images/destination/garden-wedding.png',
+      },
+      {
+        id: 'poolside-deck',
+        title: 'Poolside Deck',
+        subtitle: 'Haldi & Mehendi',
+        description:
+          'Sun-kissed celebrations by the shimmering pool, with the forest canopy as your backdrop and golden hour as your spotlight.',
+        image: '/images/destination/poolside.png',
+      },
+      {
+        id: 'banquet-hall',
+        title: 'Grand Banquet Hall',
+        subtitle: 'Sangeet & Reception',
+        description:
+          'An opulent indoor space where crystal chandeliers meet warm wood paneling — elegance that takes your breath away.',
+        image: '/images/destination/banquet-hall.png',
+      },
+    ],
+    highlights: [
+      { icon: '🌿', label: '52 Luxury Rooms' },
+      { icon: '🏊', label: 'Infinity Pool' },
+      { icon: '🍽️', label: 'Fine Dining' },
+      { icon: '💆', label: 'Spa & Wellness' },
+      { icon: '🐅', label: 'Safari Trails' },
+      { icon: '🌄', label: 'Mountain Views' },
+    ],
+  },
   travel: {
-    airport: 'Jolly Grant Airport, Dehradun',
-    railway: 'Dehradun Railway Station',
-    driveTime: 'Approximately 1 hour 20 minutes to Mussoorie',
-    accommodation: 'The Grand Himalayan Resort',
+    airport: 'Pantnagar Airport (PGH)',
+    railway: 'Ramnagar Railway Station',
+    driveTime: 'Approximately 1 hour from Pantnagar Airport',
+    accommodation: 'Corbett Tusker Trail',
     checkIn: '15 February',
     checkOut: '19 February',
   },
@@ -113,7 +152,7 @@ export const content = {
   },
   contacts: {
     helpline: '+91 98765 43210',
-    accommodation: '+91 91234 56789',
+    accommodation: '+91 92590 27780',
     email: 'wedding@example.com',
   },
 }

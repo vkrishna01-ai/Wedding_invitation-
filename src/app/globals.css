@@ -15,6 +15,13 @@
   --color-sage: #9CAF98;
   --color-deep-red: #7B2D26;
 
+  /* Destination / Forest Theme */
+  --color-forest-deep: #0a0f05;
+  --color-forest-green: #1a2e12;
+  --color-forest-moss: #3a5a2c;
+  --color-amber: #FFB830;
+  --color-amber-soft: #E8C864;
+
   --background: var(--color-ivory);
   --foreground: var(--color-charcoal);
 }
@@ -154,6 +161,169 @@ body {
   }
 }
 
+/* ═══════════════════════════════════════════════════
+   DESTINATION — TUSKER TRAIL EXPERIENCE
+   ═══════════════════════════════════════════════════ */
+
+/* ─── Destination Section ─── */
+
+.destination-section {
+  position: relative;
+}
+
+/* ─── Parallax Hero ─── */
+
+.destination-parallax-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.destination-parallax-bg {
+  position: absolute;
+  inset: -20% 0;
+  z-index: 1;
+  will-change: transform;
+}
+
+.destination-parallax-mist {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: 
+    radial-gradient(ellipse 100% 60% at 50% 80%, rgba(10, 15, 5, 0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 40% at 30% 60%, rgba(58, 90, 44, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 40% at 70% 40%, rgba(58, 90, 44, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ─── Glassmorphism Card ─── */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Flip Countdown ─── */
+
+.flip-digit-card {
+  position: relative;
+  width: 56px;
+  height: 72px;
+  background: var(--color-warm-white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.03),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(197, 165, 90, 0.15);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .flip-digit-card {
+    width: 76px;
+    height: 96px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flip-digit-card {
+    width: 90px;
+    height: 110px;
+  }
+}
+
+.flip-digit-value {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 300;
+  font-size: 2rem;
+  color: var(--color-charcoal);
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .flip-digit-value {
+    font-size: 2.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flip-digit-value {
+    font-size: 3.25rem;
+  }
+}
+
+/* ─── Ken Burns (slow zoom) for venue images ─── */
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.08) translate(-1%, -1%);
+  }
+}
+
+.ken-burns {
+  animation: kenBurns 20s ease-in-out infinite alternate;
+}
+
+/* ─── Gentle bounce for scroll hint ─── */
+
+@keyframes gentleBounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+/* ─── Venue card shimmer on hover ─── */
+
+@keyframes cardShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.venue-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0.06) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.venue-card:hover::before {
+  opacity: 1;
+  animation: cardShimmer 3s ease-in-out infinite;
+}
+
 /* ─── Reduced Motion ─── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -163,5 +333,14 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .destination-parallax-hero {
+    height: auto;
+    min-height: 60vh;
+  }
+
+  .venue-card .ken-burns {
+    animation: none;
   }
 }

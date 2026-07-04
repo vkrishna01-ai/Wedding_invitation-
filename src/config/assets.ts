@@ -30,6 +30,12 @@ export const assets = {
       siblings: '/images/family/siblings.jpg',
       grandparents: '/images/family/grandparents.jpg',
     },
+    destination: {
+      heroParallax: '/images/destination/jungle-canopy.png',
+      poolside: '/images/destination/poolside.png',
+      gardenWedding: '/images/destination/garden-wedding.png',
+      banquetHall: '/images/destination/banquet-hall.png',
+    },
     ui: {
       invitationPaper: '/images/invitation-paper.png',
       waxSeal: '/images/wax-seal.png',
@@ -49,6 +55,6 @@ export const assets = {
     ]
   },
   map: {
-    coordinates: { lat: 30.4598, lng: 78.0664 },
+    coordinates: { lat: 29.5300, lng: 79.1300 },
   }
 }

@@ -1,8 +1,40 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
-import { useFrame, useLoader } from '@react-three/fiber'
+import { useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+
+/**
+ * Generate golden particle data deterministically.
+ */
+function generateParticleData(count: number) {
+  let seed = 73
+  function seededRandom() {
+    seed = (seed * 16807 + 0) % 2147483647
+    return (seed - 1) / 2147483646
+  }
+
+  const positions = new Float32Array(count * 3)
+  const sizes = new Float32Array(count)
+  const speeds = new Float32Array(count)
+  const offsets = new Float32Array(count)
+
+  for (let i = 0; i < count; i++) {
+    const angle = seededRandom() * Math.PI * 2
+    const radius = 0.6 + seededRandom() * 1.8
+    const height = (seededRandom() - 0.5) * 2.4
+
+    positions[i * 3] = Math.cos(angle) * radius
+    positions[i * 3 + 1] = height
+    positions[i * 3 + 2] = Math.sin(angle) * radius * 0.3
+
+    sizes[i] = 0.008 + seededRandom() * 0.025
+    speeds[i] = 0.15 + seededRandom() * 0.4
+    offsets[i] = seededRandom() * Math.PI * 2
+  }
+
+  return { positions, sizes, speeds, offsets }
+}
 
 /**
  * Golden particles that orbit and float around the Ganesh image,
@@ -10,30 +42,9 @@ import * as THREE from 'three'
  */
 export default function GoldenParticles({ count = 120 }: { count?: number }) {
   const meshRef = useRef<THREE.Points>(null!)
-
-  // Generate random particle positions in a disc / sphere around center
-  const { positions, sizes, speeds, offsets } = useMemo(() => {
-    const positions = new Float32Array(count * 3)
-    const sizes = new Float32Array(count)
-    const speeds = new Float32Array(count)
-    const offsets = new Float32Array(count)
-
-    for (let i = 0; i < count; i++) {
-      const angle = Math.random() * Math.PI * 2
-      const radius = 0.6 + Math.random() * 1.8
-      const height = (Math.random() - 0.5) * 2.4
-
-      positions[i * 3] = Math.cos(angle) * radius
-      positions[i * 3 + 1] = height
-      positions[i * 3 + 2] = Math.sin(angle) * radius * 0.3 // flatten z for depth
-
-      sizes[i] = 0.008 + Math.random() * 0.025
-      speeds[i] = 0.15 + Math.random() * 0.4
-      offsets[i] = Math.random() * Math.PI * 2
-    }
-
-    return { positions, sizes, speeds, offsets }
-  }, [count])
+  const data = generateParticleData(count)
+  const speedsRef = useRef(data.speeds)
+  const offsetsRef = useRef(data.offsets)
 
   useFrame(({ clock }) => {
     if (!meshRef.current) return
@@ -42,8 +53,8 @@ export default function GoldenParticles({ count = 120 }: { count?: number }) {
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
-      const speed = speeds[i]
-      const offset = offsets[i]
+      const speed = speedsRef.current[i]
+      const offset = offsetsRef.current[i]
 
       // Gentle orbital + floating motion
       posArray[i3] += Math.sin(time * speed + offset) * 0.0008
@@ -60,14 +71,16 @@ export default function GoldenParticles({ count = 120 }: { count?: number }) {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
+          args={[data.positions, 3]}
           count={count}
-          array={positions}
+          array={data.positions}
           itemSize={3}
         />
         <bufferAttribute
           attach="attributes-size"
+          args={[data.sizes, 1]}
           count={count}
-          array={sizes}
+          array={data.sizes}
           itemSize={1}
         />
       </bufferGeometry>
