@@ -1,26 +1,167 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════
+   LUXURY WEDDING STATIONERY — DESIGN SYSTEM
+   ═══════════════════════════════════════════════════ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ivory: #FAF8F4;
+  --color-parchment: #F0EBE3;
+  --color-warm-white: #FEFDFB;
+  --color-charcoal: #1A1A1A;
+  --color-stone: #8E8579;
+  --color-gold: #C5A55A;
+  --color-gold-light: #D4C48A;
+  --color-sage: #9CAF98;
+  --color-deep-red: #7B2D26;
+
+  --background: var(--color-ivory);
+  --foreground: var(--color-charcoal);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ivory: var(--color-ivory);
+  --color-parchment: var(--color-parchment);
+  --color-warm-white: var(--color-warm-white);
+  --color-charcoal: var(--color-charcoal);
+  --color-stone: var(--color-stone);
+  --color-gold: var(--color-gold);
+  --color-gold-light: var(--color-gold-light);
+  --color-sage: var(--color-sage);
+  --color-deep-red: var(--color-deep-red);
+
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─── Base ─── */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-warm-white);
+}
+
+/* ─── Paper Texture ─── */
+
+.paper-texture::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: multiply;
+}
+
+/* ─── Gold Foil ─── */
+
+.gold-foil {
+  background: linear-gradient(
+    115deg,
+    #B38728 0%,
+    #D4AF37 28%,
+    #F9EF99 42%,
+    #D4AF37 58%,
+    #B38728 72%,
+    #C5A55A 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* ─── Letterpress Text ─── */
+
+.letterpress {
+  color: var(--color-charcoal);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ─── Stationery Card ─── */
+
+.card {
+  background: var(--color-warm-white);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.02),
+    0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+/* ─── Gold Divider ─── */
+
+.gold-line {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-gold-light),
+    transparent
+  );
+}
+
+/* ─── Gold Border Frame (double line) ─── */
+
+.gold-frame {
+  position: relative;
+}
+.gold-frame::before,
+.gold-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-gold-light);
+  pointer-events: none;
+  opacity: 0.4;
+}
+.gold-frame::before {
+  inset: 16px;
+}
+.gold-frame::after {
+  inset: 22px;
+  opacity: 0.2;
+}
+
+/* ─── 3D Ganesh Scene ─── */
+
+.ganesh-scene-container {
+  width: 180px;
+  height: 180px;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .ganesh-scene-container {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ganesh-scene-container {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+/* ─── Reduced Motion ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
