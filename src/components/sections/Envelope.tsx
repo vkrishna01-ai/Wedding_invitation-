@@ -1,16 +1,32 @@
 'use client'
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useMemo } from 'react'
 import gsap from 'gsap'
 import { useUIStore } from '@/store/useUIStore'
 
+/**
+ * Romantic envelope opening — a soft petal-adorned entry screen
+ * that fades elegantly into the main invitation.
+ */
 export default function Envelope() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const flapRef = useRef<HTMLDivElement>(null)
-  const sealRef = useRef<HTMLDivElement>(null)
-  const letterRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLDivElement>(null)
   const promptRef = useRef<HTMLDivElement>(null)
 
   const setEnvelopeOpen = useUIStore((s) => s.setEnvelopeOpen)
+
+  // Generate decorative petals for the opening screen
+  const petals = useMemo(() => {
+    const colors = ['#FFB4C2', '#FF8FA3', '#FDA4AF', '#FFC2D1', '#FECDD3']
+    return Array.from({ length: 12 }, (_, i) => ({
+      id: i,
+      left: `${10 + Math.random() * 80}%`,
+      top: `${10 + Math.random() * 80}%`,
+      size: `${8 + Math.random() * 12}px`,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      delay: i * 0.08,
+    }))
+  }, [])
 
   const handleOpen = useCallback(() => {
     if (!containerRef.current) return
@@ -19,142 +35,103 @@ export default function Envelope() {
       onComplete: () => {
         setEnvelopeOpen(true)
         if (containerRef.current) {
-          gsap.to(containerRef.current, {
-            opacity: 0,
-            duration: 1.5,
-            ease: 'power2.inOut',
-            onComplete: () => {
-              if (containerRef.current) containerRef.current.style.display = 'none'
-            },
-          })
+          containerRef.current.style.display = 'none'
         }
       },
     })
 
-    // 1. Fade out the prompt text
-    tl.to(promptRef.current, { opacity: 0, duration: 0.4, ease: 'power2.out' })
+    // Fade out prompt
+    tl.to(promptRef.current, { opacity: 0, duration: 0.3 })
 
-    // 2. Break the wax seal — crack apart
-    tl.to(sealRef.current, {
-      scale: 1.1,
+    // Petals scatter outward
+    const petalEls = containerRef.current.querySelectorAll('.entry-petal')
+    tl.to(petalEls, {
       opacity: 0,
-      duration: 1.2,
-      ease: 'power3.inOut',
+      scale: 2,
+      x: () => (Math.random() - 0.5) * 200,
+      y: () => (Math.random() - 0.5) * 200,
+      duration: 1,
+      stagger: 0.03,
+      ease: 'power2.out',
     }, '-=0.1')
 
-    // 3. Lift the envelope flap — slow, physical
-    tl.to(flapRef.current, {
-      rotateX: -180,
-      duration: 2,
+    // Text scales up and fades
+    tl.to(textRef.current, {
+      opacity: 0,
+      scale: 1.1,
+      duration: 1.2,
       ease: 'power2.inOut',
-    }, '-=0.4')
+    }, '-=0.8')
 
-    // 4. Letter rises out of the envelope
-    tl.to(letterRef.current, {
-      y: -60,
-      opacity: 1,
-      duration: 1.8,
-      ease: 'power2.out',
-    }, '-=1')
+    // Container fades to white
+    tl.to(containerRef.current, {
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.inOut',
+    }, '-=0.5')
   }, [setEnvelopeOpen])
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-parchment"
-      style={{ perspective: '1200px' }}
+      className="fixed inset-0 z-[100] flex items-center justify-center cursor-pointer"
+      onClick={handleOpen}
+      role="button"
+      tabIndex={0}
+      aria-label="Open wedding invitation"
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleOpen() }}
+      style={{
+        background: 'linear-gradient(180deg, #FFF9F5 0%, #FFE4E6 50%, #FFF1F2 100%)',
+      }}
     >
-      {/* ─── Envelope Body ─── */}
-      <div
-        className="relative w-[90vw] max-w-[520px] aspect-[4/3] cursor-pointer"
-        onClick={handleOpen}
-        role="button"
-        tabIndex={0}
-        aria-label="Open invitation envelope"
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleOpen() }}
-      >
-        {/* Envelope base */}
-        <div className="absolute inset-0 bg-warm-white shadow-[0_8px_40px_rgba(0,0,0,0.08)] rounded-sm" />
-
-        {/* Inner V-fold lines (decorative) */}
+      {/* Decorative petals scattered around */}
+      {petals.map((p) => (
         <div
-          className="absolute inset-0 pointer-events-none opacity-[0.06]"
+          key={p.id}
+          className="entry-petal absolute rounded-[50%_0_50%_50%] opacity-40"
           style={{
-            background: `
-              linear-gradient(to bottom right, transparent 49.5%, var(--color-stone) 49.5%, var(--color-stone) 50.5%, transparent 50.5%),
-              linear-gradient(to bottom left, transparent 49.5%, var(--color-stone) 49.5%, var(--color-stone) 50.5%, transparent 50.5%)
-            `,
+            left: p.left,
+            top: p.top,
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            transform: `rotate(${p.rotation}deg)`,
           }}
         />
+      ))}
 
-        {/* Top flap */}
-        <div
-          ref={flapRef}
-          className="absolute top-0 left-0 right-0 z-20"
-          style={{
-            transformOrigin: 'top center',
-            transformStyle: 'preserve-3d',
-            height: '55%',
-          }}
-        >
-          {/* Flap front */}
-          <div
-            className="absolute inset-0 bg-warm-white"
-            style={{
-              clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
-              backfaceVisibility: 'hidden',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-            }}
-          />
-          {/* Flap back (visible when flipped) */}
-          <div
-            className="absolute inset-0 bg-parchment"
-            style={{
-              clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
-              transform: 'rotateX(180deg)',
-              backfaceVisibility: 'hidden',
-            }}
-          />
-        </div>
+      {/* Center content */}
+      <div ref={textRef} className="flex flex-col items-center text-center px-8">
+        {/* Decorative heart */}
+        <span className="text-4xl md:text-5xl mb-6 opacity-60">💌</span>
 
-        {/* Letter peeking out */}
-        <div
-          ref={letterRef}
-          className="absolute left-[8%] right-[8%] bottom-[15%] h-[50%] bg-ivory border border-gold-light/20 opacity-0 z-10 flex items-center justify-center"
-        >
-          <p className="font-serif text-charcoal/40 text-sm tracking-[0.2em] italic">
-            You are invited
-          </p>
-        </div>
+        {/* Title */}
+        <p className="font-script text-3xl md:text-4xl lg:text-5xl text-rose/70 mb-3">
+          You&apos;re Invited
+        </p>
 
-        {/* ─── Wax Seal ─── */}
-        <div
-          ref={sealRef}
-          className="absolute z-30 left-1/2 -translate-x-1/2 flex items-center justify-center"
-          style={{ top: '48%' }}
-        >
-          {/* Outer ring */}
-          <div className="w-[72px] h-[72px] rounded-full bg-deep-red flex items-center justify-center shadow-[0_4px_12px_rgba(123,45,38,0.3),inset_0_2px_4px_rgba(255,255,255,0.15)]">
-            {/* Inner recessed circle */}
-            <div className="w-[52px] h-[52px] rounded-full bg-deep-red flex items-center justify-center shadow-[inset_0_2px_6px_rgba(0,0,0,0.3)]">
-              {/* Monogram */}
-              <span
-                className="font-serif text-gold/80 text-xl tracking-wider select-none"
-                style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
-              >
-                R&thinsp;R
-              </span>
-            </div>
-          </div>
-        </div>
+        {/* Subtitle */}
+        <p className="font-serif text-sm md:text-base text-charcoal/50 italic mb-2">
+          to the wedding celebration of
+        </p>
 
-        {/* ─── Prompt ─── */}
-        <div
-          ref={promptRef}
-          className="absolute bottom-4 left-0 right-0 text-center z-30 pointer-events-none"
-        >
-          <p className="font-sans text-[9px] tracking-[0.4em] uppercase text-stone/60">
-            Tap the seal to open
+        {/* Names */}
+        <p className="font-serif text-xl md:text-2xl text-charcoal/80 tracking-[0.1em] uppercase mb-8">
+          Ravi & Rudrakshi
+        </p>
+
+        {/* Rose divider */}
+        <div className="rose-line w-16 mb-8" />
+      </div>
+
+      {/* Tap prompt */}
+      <div ref={promptRef} className="absolute bottom-12 left-0 right-0 text-center">
+        <div className="inline-flex flex-col items-center gap-2">
+          <span className="inline-block w-10 h-10 rounded-full border-2 border-rose/30 flex items-center justify-center pulse-glow">
+            <span className="text-rose/50 text-sm">♡</span>
+          </span>
+          <p className="font-sans text-[9px] tracking-[0.35em] uppercase text-stone/50">
+            Tap to open
           </p>
         </div>
       </div>

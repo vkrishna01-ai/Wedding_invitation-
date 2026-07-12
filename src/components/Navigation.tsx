@@ -36,7 +36,7 @@ export default function Navigation() {
 
       {/* Overlay */}
       <nav
-        className={`fixed inset-0 z-[100] bg-ivory/97 backdrop-blur-sm flex items-center justify-center transition-opacity duration-1000 ${
+        className={`fixed inset-0 z-[100] bg-cream-soft/97 backdrop-blur-sm flex items-center justify-center transition-opacity duration-1000 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         aria-hidden={!isOpen}
@@ -46,7 +46,7 @@ export default function Navigation() {
             <li key={name}>
               <button
                 onClick={() => setIsOpen(false)}
-                className="font-serif text-3xl md:text-4xl text-charcoal hover:text-gold transition-colors duration-500 tracking-[0.1em]"
+                className="font-script text-4xl md:text-5xl text-charcoal hover:text-rose transition-colors duration-500 tracking-wide"
                 style={{
                   transitionDelay: isOpen ? `${i * 80 + 200}ms` : '0ms',
                   opacity: isOpen ? 1 : 0,

@@ -17,21 +17,21 @@ export default function Events() {
   }, [])
 
   return (
-    <section id="events" className="min-h-screen flex flex-col items-center px-4 sm:px-6 py-24 md:py-40">
+    <section id="events" className="min-h-screen flex flex-col items-center px-4 sm:px-6 py-24 md:py-40 bg-ivory">
       {/* Chapter label */}
       <div ref={labelRef} className="flex flex-col items-center gap-3 mb-16 md:mb-24 opacity-0">
-        <span className="font-serif text-2xl md:text-3xl text-gold italic">IV</span>
+        <span className="font-serif text-2xl md:text-3xl text-rose/60 italic">IV</span>
         <span className="font-sans text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-stone">
           The Celebration
         </span>
-        <div className="gold-line w-24 mt-2" />
+        <div className="rose-line w-24 mt-2" />
       </div>
 
       {/* Section heading */}
-      <h2 className="font-serif font-light text-3xl md:text-4xl lg:text-5xl text-charcoal text-center tracking-[0.1em] uppercase letterpress mb-4">
+      <h2 className="font-script text-4xl md:text-5xl lg:text-6xl text-rose text-center mb-6">
         Schedule of Events
       </h2>
-      <p className="font-sans text-sm text-stone text-center max-w-lg mb-16 md:mb-24">
+      <p className="font-sans text-sm text-stone text-center max-w-lg mb-16 md:mb-24 px-4">
         Two days of love, laughter and timeless traditions — nestled in the heart of Jim Corbett's enchanting wilderness.
       </p>
 

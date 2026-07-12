@@ -1,28 +1,41 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════
-   LUXURY WEDDING STATIONERY — DESIGN SYSTEM
+   ROMANTIC WEDDING INVITATION — DESIGN SYSTEM
+   Light · Whimsical · Traditional · Warm
    ═══════════════════════════════════════════════════ */
 
 :root {
-  --color-ivory: #FAF8F4;
-  --color-parchment: #F0EBE3;
-  --color-warm-white: #FEFDFB;
-  --color-charcoal: #1A1A1A;
-  --color-stone: #8E8579;
+  /* Core palette — warm cream & blush */
+  --color-cream: #FFF9F5;
+  --color-cream-soft: #FFFAF7;
+  --color-blush: #FFE4E6;
+  --color-blush-light: #FFF1F2;
+  --color-rose: #E11D48;
+  --color-rose-soft: #FB7185;
+  --color-crimson: #BE123C;
+  --color-warm-brown: #78350F;
+  --color-warm-brown-light: #92400E;
+
+  /* Supporting */
+  --color-ivory: #FFF9F5;
+  --color-parchment: #FFF5EE;
+  --color-warm-white: #FFFCFA;
+  --color-charcoal: #3F2B1E;
+  --color-stone: #9C8B7E;
   --color-gold: #C5A55A;
   --color-gold-light: #D4C48A;
   --color-sage: #9CAF98;
-  --color-deep-red: #7B2D26;
+  --color-deep-red: #BE123C;
 
-  /* Destination / Forest Theme */
-  --color-forest-deep: #0a0f05;
-  --color-forest-green: #1a2e12;
-  --color-forest-moss: #3a5a2c;
-  --color-amber: #FFB830;
-  --color-amber-soft: #E8C864;
+  /* Accents */
+  --color-petal-pink: #FFB4C2;
+  --color-petal-rose: #FF8FA3;
+  --color-petal-deep: #F43F5E;
+  --color-leaf-green: #86EFAC;
+  --color-amber: #F59E0B;
 
-  --background: var(--color-ivory);
+  --background: var(--color-cream);
   --foreground: var(--color-charcoal);
 }
 
@@ -30,6 +43,10 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-ivory: var(--color-ivory);
+  --color-cream: var(--color-cream);
+  --color-cream-soft: var(--color-cream-soft);
+  --color-blush: var(--color-blush);
+  --color-blush-light: var(--color-blush-light);
   --color-parchment: var(--color-parchment);
   --color-warm-white: var(--color-warm-white);
   --color-charcoal: var(--color-charcoal);
@@ -38,9 +55,14 @@
   --color-gold-light: var(--color-gold-light);
   --color-sage: var(--color-sage);
   --color-deep-red: var(--color-deep-red);
+  --color-rose: var(--color-rose);
+  --color-rose-soft: var(--color-rose-soft);
+  --color-crimson: var(--color-crimson);
+  --color-warm-brown: var(--color-warm-brown);
 
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-inter);
+  --font-script: var(--font-dancing-script);
 }
 
 /* ─── Base ─── */
@@ -55,23 +77,47 @@ body {
 }
 
 ::selection {
-  background: var(--color-gold);
-  color: var(--color-warm-white);
+  background: var(--color-rose);
+  color: white;
 }
 
-/* ─── Paper Texture ─── */
+/* ─── Subtle Texture ─── */
 
 .paper-texture::after {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
   mix-blend-mode: multiply;
 }
 
-/* ─── Gold Foil ─── */
+/* ─── Script Font (Calligraphy) ─── */
+
+.font-script {
+  font-family: var(--font-dancing-script), var(--font-cormorant), cursive;
+}
+
+/* ─── Rose Foil Text ─── */
+
+.rose-foil {
+  background: linear-gradient(
+    115deg,
+    #BE123C 0%,
+    #E11D48 28%,
+    #FB7185 42%,
+    #E11D48 58%,
+    #BE123C 72%,
+    #F43F5E 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* ─── Gold Foil (kept for compatibility) ─── */
 
 .gold-foil {
   background: linear-gradient(
@@ -96,16 +142,29 @@ body {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
-/* ─── Stationery Card ─── */
+/* ─── Card ─── */
 
 .card {
   background: var(--color-warm-white);
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.02),
     0 8px 24px rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
 }
 
-/* ─── Gold Divider ─── */
+/* ─── Rose Divider Line ─── */
+
+.rose-line {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-rose-soft),
+    transparent
+  );
+}
+
+/* ─── Gold Divider Line (compatibility) ─── */
 
 .gold-line {
   height: 1px;
@@ -117,7 +176,30 @@ body {
   );
 }
 
-/* ─── Gold Border Frame (double line) ─── */
+/* ─── Rose Border Frame ─── */
+
+.rose-frame {
+  position: relative;
+}
+.rose-frame::before,
+.rose-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-rose-soft);
+  pointer-events: none;
+  opacity: 0.25;
+  border-radius: inherit;
+}
+.rose-frame::before {
+  inset: 12px;
+}
+.rose-frame::after {
+  inset: 16px;
+  opacity: 0.12;
+}
+
+/* ─── Gold Border Frame (compatibility) ─── */
 
 .gold-frame {
   position: relative;
@@ -139,7 +221,71 @@ body {
   opacity: 0.2;
 }
 
-/* ─── 3D Ganesh Scene ─── */
+/* ─── Red CTA Button ─── */
+
+.btn-rose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, var(--color-rose) 0%, var(--color-crimson) 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 20px rgba(225, 29, 72, 0.25);
+  text-decoration: none;
+}
+
+.btn-rose:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(225, 29, 72, 0.35);
+}
+
+.btn-rose:active {
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════
+   FLOATING PETALS — CSS ANIMATION
+   ═══════════════════════════════════════════════════ */
+
+@keyframes floatPetal {
+  0% {
+    transform: translate(0, -10vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(100px, 110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.petal {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50% 0 50% 50%;
+  pointer-events: none;
+  animation: floatPetal linear infinite;
+  opacity: 0;
+  z-index: 5;
+}
+
+/* ─── 3D Ganesh Scene (compatibility) ─── */
 
 .ganesh-scene-container {
   width: 180px;
@@ -162,16 +308,12 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════
-   DESTINATION — TUSKER TRAIL EXPERIENCE
+   DESTINATION — VENUE SHOWCASE
    ═══════════════════════════════════════════════════ */
-
-/* ─── Destination Section ─── */
 
 .destination-section {
   position: relative;
 }
-
-/* ─── Parallax Hero ─── */
 
 .destination-parallax-hero {
   position: relative;
@@ -191,7 +333,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: 
+  background:
     radial-gradient(ellipse 100% 60% at 50% 80%, rgba(10, 15, 5, 0.5) 0%, transparent 70%),
     radial-gradient(ellipse 80% 40% at 30% 60%, rgba(58, 90, 44, 0.15) 0%, transparent 60%),
     radial-gradient(ellipse 80% 40% at 70% 40%, rgba(58, 90, 44, 0.1) 0%, transparent 60%);
@@ -214,7 +356,7 @@ body {
   width: 56px;
   height: 72px;
   background: var(--color-warm-white);
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -222,7 +364,7 @@ body {
     0 2px 8px rgba(0, 0, 0, 0.04),
     0 8px 24px rgba(0, 0, 0, 0.03),
     inset 0 -1px 0 rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(197, 165, 90, 0.15);
+  border: 1px solid var(--color-blush);
   overflow: hidden;
 }
 
@@ -262,7 +404,7 @@ body {
   }
 }
 
-/* ─── Ken Burns (slow zoom) for venue images ─── */
+/* ─── Ken Burns ─── */
 
 @keyframes kenBurns {
   0% {
@@ -277,7 +419,7 @@ body {
   animation: kenBurns 20s ease-in-out infinite alternate;
 }
 
-/* ─── Gentle bounce for scroll hint ─── */
+/* ─── Gentle bounce ─── */
 
 @keyframes gentleBounce {
   0%, 100% {
@@ -290,7 +432,7 @@ body {
   }
 }
 
-/* ─── Venue card shimmer on hover ─── */
+/* ─── Venue card shimmer ─── */
 
 @keyframes cardShimmer {
   0% {
@@ -309,7 +451,7 @@ body {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(212, 175, 55, 0.06) 50%,
+    rgba(225, 29, 72, 0.04) 50%,
     transparent 100%
   );
   background-size: 200% 100%;
@@ -322,6 +464,42 @@ body {
 .venue-card:hover::before {
   opacity: 1;
   animation: cardShimmer 3s ease-in-out infinite;
+}
+
+/* ─── Leaf/petal float for decorative elements ─── */
+
+@keyframes floatLeaf {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(-3deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(4deg);
+  }
+}
+
+.float-leaf {
+  animation: floatLeaf 6s ease-in-out infinite;
+}
+
+/* ─── Pulse glow for interactive elements ─── */
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(225, 29, 72, 0);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
 }
 
 /* ─── Reduced Motion ─── */
@@ -342,5 +520,9 @@ body {
 
   .venue-card .ken-burns {
     animation: none;
+  }
+
+  .petal {
+    display: none;
   }
 }

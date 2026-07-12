@@ -25,7 +25,7 @@ function generatePetalData(count: number) {
     wobble: 0.3 + seededRandom() * 0.8,
     scale: 0.03 + seededRandom() * 0.05,
     offset: seededRandom() * Math.PI * 2,
-    color: ['#D4AF37', '#C5A55A', '#E8C864', '#B38728'][
+    color: ['#FFB4C2', '#FF8FA3', '#FDA4AF', '#FFC2D1'][
       Math.floor(seededRandom() * 4)
     ],
   }))

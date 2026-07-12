@@ -61,13 +61,13 @@ export default function Farewell() {
   return (
     <section
       ref={containerRef}
-      className="min-h-[150vh] flex flex-col items-center justify-center px-6 py-48 md:py-64 text-center"
+      className="min-h-[150vh] flex flex-col items-center justify-center px-6 py-48 md:py-64 text-center bg-cream"
     >
       {/* The quote — the emotional peak */}
       <p
         ref={quoteRef}
-        className="font-serif font-light italic leading-snug max-w-lg mb-32 md:mb-48 opacity-0"
-        style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', color: 'var(--color-charcoal)' }}
+        className="font-script leading-snug max-w-lg mb-32 md:mb-48 opacity-0"
+        style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', color: 'var(--color-rose)' }}
       >
         Every great story deserves witnesses.
       </p>
@@ -80,13 +80,13 @@ export default function Farewell() {
         Thank you for becoming a part of ours.
       </p>
 
-      {/* Gold ornament */}
-      <div ref={ornamentRef} className="gold-line w-24 mb-20 md:mb-28 opacity-0" />
+      {/* Rose ornament */}
+      <div ref={ornamentRef} className="rose-line w-24 mb-20 md:mb-28 opacity-0" />
 
       {/* Final signature */}
       <p
         ref={namesRef}
-        className="font-serif text-sm md:text-base text-stone/60 tracking-[0.2em] uppercase opacity-0"
+        className="font-serif text-sm md:text-base text-rose/60 tracking-[0.2em] uppercase opacity-0"
       >
         {content.couple.groom.split(' ')[0]} & {content.couple.bride.split(' ')[0]}
       </p>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Cormorant_Garamond, Inter, Dancing_Script } from "next/font/google";
 import "./globals.css";
 import { content } from "@/config/content";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
@@ -13,6 +13,12 @@ const cormorant = Cormorant_Garamond({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+const dancingScript = Dancing_Script({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-dancing-script",
 });
 
 export const metadata: Metadata = {
@@ -46,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${inter.variable} h-full`}
+      className={`${cormorant.variable} ${inter.variable} ${dancingScript.variable} h-full`}
     >
       <body className="min-h-full bg-ivory text-charcoal paper-texture">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>

@@ -1,48 +1,43 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
-import { Canvas } from '@react-three/fiber'
+import Image from 'next/image'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { content } from '@/config/content'
-import ParallaxHero from './ParallaxHero'
 import VenueShowcase from './VenueShowcase'
 import FlipCountdown from './FlipCountdown'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const ForestFireflies = dynamic(
-  () => import('@/components/3d/ForestFireflies'),
-  { ssr: false }
-)
-const JungleParticles = dynamic(
-  () => import('@/components/3d/JungleParticles'),
-  { ssr: false }
-)
-
-/**
- * Destination — the immersive orchestrator section.
- *
- * Structure:
- * 1. ParallaxHero — full-viewport jungle canopy entry
- * 2. Resort Introduction — poetic description with 3D firefly overlay
- * 3. Venue Showcase — glassmorphism cards with venue images
- * 4. Flip Countdown — animated countdown to the wedding
- * 5. Getting There — travel info with directions
- */
 export default function Destination() {
   const introRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLDivElement>(null)
   const descRef = useRef<HTMLParagraphElement>(null)
-  const detailsRef = useRef<HTMLDivElement>(null)
   const travelRef = useRef<HTMLDivElement>(null)
-  const fireflySectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!introRef.current) return
 
     const ctx = gsap.context(() => {
+      // Image reveal
+      if (imageRef.current) {
+        gsap.fromTo(
+          imageRef.current,
+          { opacity: 0, scale: 0.95 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 1.5,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: introRef.current,
+              start: 'top 75%',
+            },
+          }
+        )
+      }
+
       // Description reveal
       if (descRef.current) {
         gsap.fromTo(
@@ -51,31 +46,11 @@ export default function Destination() {
           {
             opacity: 1,
             y: 0,
-            duration: 2,
+            duration: 1.5,
             ease: 'power2.out',
             scrollTrigger: {
               trigger: descRef.current,
-              start: 'top 75%',
-            },
-          }
-        )
-      }
-
-      // Details reveal
-      if (detailsRef.current) {
-        const items = detailsRef.current.querySelectorAll('.detail-item')
-        gsap.fromTo(
-          items,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.15,
-            duration: 1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: detailsRef.current,
-              start: 'top 80%',
+              start: 'top 85%',
             },
           }
         )
@@ -104,103 +79,101 @@ export default function Destination() {
   }, [])
 
   return (
-    <section className="destination-section">
-      {/* ═══ 1. PARALLAX HERO ═══ */}
-      <ParallaxHero />
-
-      {/* ═══ 2. RESORT INTRODUCTION ═══ */}
-      <div
-        ref={introRef}
-        className="relative bg-[#0a0f05] overflow-hidden"
-      >
-        {/* 3D Firefly Canvas — ambient background */}
-        <div
-          ref={fireflySectionRef}
-          className="absolute inset-0 z-[1] pointer-events-none"
-        >
-          <Canvas
-            camera={{ position: [0, 0, 4], fov: 50 }}
-            gl={{ antialias: false, alpha: true, powerPreference: 'low-power' }}
-            style={{ background: 'transparent' }}
-            dpr={[1, 1.5]}
-          >
-            <Suspense fallback={null}>
-              <ForestFireflies count={150} />
-              <JungleParticles count={60} />
-            </Suspense>
-          </Canvas>
+    <section className="destination-section bg-cream">
+      {/* ═══ 1. RESORT INTRODUCTION ═══ */}
+      <div ref={introRef} className="relative pt-24 pb-16 md:pt-32 md:pb-24 px-6 max-w-4xl mx-auto text-center">
+        {/* Chapter marker */}
+        <div className="flex flex-col items-center gap-3 mb-10 md:mb-14">
+          <span className="font-serif text-2xl md:text-3xl text-rose/60 italic">
+            II
+          </span>
+          <span className="font-sans text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-stone">
+            The Destination
+          </span>
         </div>
 
-        {/* Content over fireflies */}
-        <div className="relative z-[2] max-w-3xl mx-auto px-6 py-32 md:py-48 text-center">
-          {/* Poetic description */}
-          <p
-            ref={descRef}
-            className="font-serif font-light italic text-white/70 leading-[1.8] md:leading-[2] opacity-0"
-            style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}
-          >
-            {content.weddingDetails.venueDescription}
-          </p>
+        {/* Venue Image */}
+        <div ref={imageRef} className="relative w-full aspect-[4/3] md:aspect-[16/9] mb-12 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(225,29,72,0.1)] border-4 border-white opacity-0">
+          <Image
+            src="/images/destination/watercolor-venue.png"
+            alt="Beautiful watercolor painting of the wedding venue"
+            fill
+            className="object-cover hover:scale-105 transition-transform duration-1000 ease-in-out"
+            priority
+          />
+        </div>
 
-          {/* Gold divider */}
-          <div className="mx-auto w-16 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-transparent my-12 md:my-16" />
+        {/* Title */}
+        <h2
+          className="font-script text-4xl md:text-5xl text-rose mb-6"
+        >
+          {content.weddingDetails.venue}
+        </h2>
 
-          {/* Quick facts */}
-          <div
-            ref={detailsRef}
-            className="flex flex-wrap items-center justify-center gap-6 md:gap-10"
-          >
-            <div className="detail-item flex flex-col items-center gap-1 opacity-0">
-              <span className="font-sans text-[9px] tracking-[0.3em] uppercase text-white/30">
-                Venue
-              </span>
-              <span className="font-serif text-sm md:text-base text-white/70 italic">
-                {content.weddingDetails.venue}
-              </span>
-            </div>
-            <span className="text-[#D4AF37]/30 hidden md:inline">·</span>
-            <div className="detail-item flex flex-col items-center gap-1 opacity-0">
-              <span className="font-sans text-[9px] tracking-[0.3em] uppercase text-white/30">
-                Climate
-              </span>
-              <span className="font-serif text-sm md:text-base text-white/70 italic">
-                {content.weddingDetails.weather}
-              </span>
-            </div>
-            <span className="text-[#D4AF37]/30 hidden md:inline">·</span>
-            <div className="detail-item flex flex-col items-center gap-1 opacity-0">
-              <span className="font-sans text-[9px] tracking-[0.3em] uppercase text-white/30">
-                Altitude
-              </span>
-              <span className="font-serif text-sm md:text-base text-white/70 italic">
-                {content.weddingDetails.altitude}
-              </span>
-            </div>
+        {/* Poetic description */}
+        <p
+          ref={descRef}
+          className="font-serif font-light text-charcoal/80 leading-[1.8] md:leading-[2] opacity-0 max-w-2xl mx-auto mb-10"
+          style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)' }}
+        >
+          {content.weddingDetails.venueDescription}
+        </p>
+
+        {/* Quick facts */}
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mb-12">
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-2xl mb-1">🌤️</span>
+            <span className="font-sans text-[9px] tracking-[0.2em] uppercase text-stone/70">
+              Climate
+            </span>
+            <span className="font-serif text-sm text-charcoal italic">
+              {content.weddingDetails.weather}
+            </span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-2xl mb-1">⛰️</span>
+            <span className="font-sans text-[9px] tracking-[0.2em] uppercase text-stone/70">
+              Altitude
+            </span>
+            <span className="font-serif text-sm text-charcoal italic">
+              {content.weddingDetails.altitude}
+            </span>
           </div>
         </div>
+
+        {/* Red CTA Button */}
+        <a
+          href="https://maps.app.goo.gl/bJzE9ScdsuBR7aFc8"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-rose"
+        >
+          <span>📍</span>
+          Get Directions
+        </a>
       </div>
 
-      {/* ═══ 3. VENUE SHOWCASE ═══ */}
-      <div className="bg-ivory relative">
+      {/* ═══ 2. VENUE SHOWCASE ═══ */}
+      <div className="bg-cream-soft relative pb-12">
         <VenueShowcase />
       </div>
 
-      {/* ═══ 4. FLIP COUNTDOWN ═══ */}
-      <div className="bg-parchment relative">
+      {/* ═══ 3. FLIP COUNTDOWN ═══ */}
+      <div className="bg-blush-light relative border-t border-rose/10">
         <FlipCountdown />
       </div>
 
-      {/* ═══ 5. GETTING THERE ═══ */}
-      <div className="bg-ivory relative px-6 py-20 md:py-28">
+      {/* ═══ 4. GETTING THERE ═══ */}
+      <div className="bg-cream relative px-6 py-20 md:py-28">
         <div
           ref={travelRef}
           className="max-w-3xl mx-auto text-center opacity-0"
         >
           <span className="font-sans text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-stone block mb-8">
-            Getting There
+            Travel Details
           </span>
 
-          <div className="card gold-frame px-8 py-12 md:px-12 md:py-16">
+          <div className="card rose-frame px-8 py-12 md:px-12 md:py-16 bg-white">
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mb-8">
               {/* Airport */}
               <div className="flex flex-col items-center gap-2">
@@ -210,7 +183,7 @@ export default function Destination() {
                 </span>
               </div>
 
-              <span className="text-gold-light hidden md:inline text-lg">·</span>
+              <span className="text-rose-soft hidden md:inline text-lg">♡</span>
 
               {/* Railway */}
               <div className="flex flex-col items-center gap-2">
@@ -221,28 +194,17 @@ export default function Destination() {
               </div>
             </div>
 
-            <div className="gold-line w-24 mx-auto mb-6" />
+            <div className="rose-line w-24 mx-auto mb-6" />
 
             <p className="font-sans text-xs text-stone/70 mb-2">
               {content.travel.driveTime}
             </p>
             <p className="font-sans text-xs text-stone/60">
               Accommodation at{' '}
-              <span className="text-charcoal/70">{content.travel.accommodation}</span>{' '}
+              <span className="text-rose font-medium">{content.travel.accommodation}</span>{' '}
               · {content.travel.checkIn} – {content.travel.checkOut}
             </p>
           </div>
-
-          {/* Map link */}
-          <a
-            href="https://maps.app.goo.gl/bJzE9ScdsuBR7aFc8"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-8 py-3 px-8 border border-charcoal/10 font-sans text-[10px] tracking-[0.3em] uppercase text-stone hover:text-charcoal hover:border-gold-light transition-all duration-700"
-          >
-            <span>📍</span>
-            View on Google Maps
-          </a>
         </div>
       </div>
     </section>

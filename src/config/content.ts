@@ -58,7 +58,7 @@ export const content = {
       dressCode: 'Yellow & White',
       description: 'A sun-kissed morning of turmeric blessings by the shimmering pool, with marigolds and sacred traditions under the winter sun.',
       image: '/images/events/haldi.png',
-      accent: '#E8B830',
+      accent: '#F59E0B',
     },
     {
       id: 'mehendi',
@@ -69,7 +69,7 @@ export const content = {
       dressCode: 'Pastel Traditional',
       description: 'An afternoon of intricate artistry and joyous celebration — henna stories woven to the melody of laughter and folk songs.',
       image: '/images/events/mehendi.png',
-      accent: '#9CAF98',
+      accent: '#10B981',
     },
     {
       id: 'sangeet',
@@ -80,7 +80,7 @@ export const content = {
       dressCode: 'Glamorous Ethnic',
       description: 'A glamorous night of dance, music and dazzling performances — where every beat tells the story of two hearts becoming one.',
       image: '/images/events/sangeet.png',
-      accent: '#8B5CF6',
+      accent: '#E11D48',
     },
     {
       id: 'wedding',
@@ -91,7 +91,7 @@ export const content = {
       dressCode: 'Traditional',
       description: 'Sacred vows beneath a starlit sky and the ancient forest canopy — where love is sealed with seven steps around the holy fire.',
       image: '/images/events/wedding.png',
-      accent: '#C5A55A',
+      accent: '#BE123C',
     },
   ],
   destination: {
