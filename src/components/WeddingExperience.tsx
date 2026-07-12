@@ -8,10 +8,12 @@ import RSVP from "@/components/sections/RSVP";
 import Farewell from "@/components/sections/MemoryMode";
 import Navigation from "@/components/Navigation";
 import MusicPlayer from "@/components/MusicPlayer";
+import GlobalPetals from "@/components/GlobalPetals";
 
 export default function WeddingExperience({ guest }: { guest?: Guest }) {
   return (
     <>
+      <GlobalPetals />
       <Navigation />
       <MusicPlayer />
       <Envelope />

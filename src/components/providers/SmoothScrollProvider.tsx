@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: 0.07, // Decreased for a more luxurious inertia feel
       smoothWheel: true,
     })
 

@@ -85,11 +85,11 @@ export default function GoldenParticles({ count = 120 }: { count?: number }) {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.035}
-        color="#D4AF37"
+        size={0.045}
+        color="#FFB4C2"
         transparent
-        opacity={0.6}
-        blending={THREE.AdditiveBlending}
+        opacity={0.8}
+        blending={THREE.NormalBlending}
         depthWrite={false}
         sizeAttenuation
       />

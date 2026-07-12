@@ -54,7 +54,7 @@ function generateDiyaData(count: number) {
       ] as [number, number, number],
       flicker: 0.5 + seededRandom() * 0.5,
       offset: seededRandom() * Math.PI * 2,
-      color: ['#FFB830', '#FF9500', '#FFCC00', '#E8A000'][
+      color: ['#FFB4C2', '#FDA4AF', '#F43F5E', '#E11D48'][
         Math.floor(seededRandom() * 4)
       ],
     }
@@ -104,9 +104,9 @@ function SacredFireParticles({ count = 80 }: { count?: number }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.025}
-        color="#FFB830"
+        color="#FFB4C2"
         transparent
-        opacity={0.5}
+        opacity={0.7}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation
@@ -183,9 +183,9 @@ function SacredMandala() {
       <mesh ref={outerRef}>
         <torusGeometry args={[1.8, 0.012, 16, 120]} />
         <meshBasicMaterial
-          color="#D4AF37"
+          color="#FFB4C2"
           transparent
-          opacity={0.15}
+          opacity={0.25}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -195,9 +195,9 @@ function SacredMandala() {
       <mesh ref={innerRef}>
         <torusGeometry args={[1.4, 0.008, 16, 100]} />
         <meshBasicMaterial
-          color="#E8C864"
+          color="#FDA4AF"
           transparent
-          opacity={0.12}
+          opacity={0.2}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -207,9 +207,9 @@ function SacredMandala() {
       <mesh ref={glowRef} position={[0, 0, -0.2]}>
         <circleGeometry args={[2.0, 64]} />
         <meshBasicMaterial
-          color="#D4AF37"
+          color="#FFB4C2"
           transparent
-          opacity={0.03}
+          opacity={0.06}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           side={THREE.DoubleSide}
@@ -255,9 +255,9 @@ function SacredGeometry() {
         <mesh key={i} position={pos}>
           <circleGeometry args={[0.02, 8]} />
           <meshBasicMaterial
-            color="#D4AF37"
+            color="#FFB4C2"
             transparent
-            opacity={0.2}
+            opacity={0.4}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
             side={THREE.DoubleSide}
@@ -282,8 +282,8 @@ export default function SacredRSVPScene() {
       <directionalLight position={[0, 3, 2]} intensity={0.5} color="#FFF8E7" />
 
       {/* Sacred fire glow */}
-      <pointLight position={[0, 0.5, 0]} intensity={1.5} color="#FFB830" distance={4} />
-      <pointLight position={[0, -0.5, 0.5]} intensity={0.8} color="#D4AF37" distance={3} />
+      <pointLight position={[0, 0.5, 0]} intensity={1.5} color="#FFB4C2" distance={4} />
+      <pointLight position={[0, -0.5, 0.5]} intensity={0.8} color="#FDA4AF" distance={3} />
 
       {/* Sacred mandala rings */}
       <SacredMandala />

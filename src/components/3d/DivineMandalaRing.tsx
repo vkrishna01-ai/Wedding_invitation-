@@ -19,9 +19,9 @@ export default function DivineMandalaRing() {
     materialRef.current = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        uColor1: { value: new THREE.Color('#B38728') },
-        uColor2: { value: new THREE.Color('#F9EF99') },
-        uColor3: { value: new THREE.Color('#D4AF37') },
+        uColor1: { value: new THREE.Color('#FFB4C2') },
+        uColor2: { value: new THREE.Color('#FDA4AF') },
+        uColor3: { value: new THREE.Color('#F43F5E') },
       },
       vertexShader: `
         varying vec2 vUv;
@@ -99,7 +99,7 @@ export default function DivineMandalaRing() {
       <mesh ref={ringRef}>
         <torusGeometry args={[1.15, 0.015, 16, 100]} />
         <meshBasicMaterial
-          color="#D4AF37"
+          color="#FFB4C2"
           transparent
           opacity={0.3}
           blending={THREE.AdditiveBlending}
@@ -111,7 +111,7 @@ export default function DivineMandalaRing() {
       <mesh rotation={[0, 0, 0.3]}>
         <torusGeometry args={[0.95, 0.008, 16, 100]} />
         <meshBasicMaterial
-          color="#D4AF37"
+          color="#FDA4AF"
           transparent
           opacity={0.2}
           blending={THREE.AdditiveBlending}
@@ -123,7 +123,7 @@ export default function DivineMandalaRing() {
       <mesh ref={glowRef} position={[0, 0, -0.1]}>
         <circleGeometry args={[1.3, 64]} />
         <meshBasicMaterial
-          color="#D4AF37"
+          color="#FFB4C2"
           transparent
           opacity={0.04}
           blending={THREE.AdditiveBlending}

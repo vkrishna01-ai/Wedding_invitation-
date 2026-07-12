@@ -1,5 +1,7 @@
 'use client'
-import { useRef, useEffect, useState, useCallback, Suspense } from 'react'
+import { useRef, useEffect, useState, useCallback } from 'react'
+import { Canvas } from '@react-three/fiber'
+import SacredRSVPScene from '@/components/3d/SacredRSVPScene'
 import type { Guest } from '@/config/guests'
 import { content } from '@/config/content'
 import { revealOnScroll } from '@/lib/animations'
@@ -44,10 +46,17 @@ export default function RSVP({ guest }: { guest?: Guest }) {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-24 md:py-40 bg-cream"
+      className="relative min-h-screen flex flex-col items-center justify-center py-24 md:py-32 px-4 md:px-8 bg-cream overflow-hidden"
     >
+      {/* 3D Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+          <SacredRSVPScene />
+        </Canvas>
+      </div>
+
       {/* Chapter label */}
-      <div ref={labelRef} className="flex flex-col items-center gap-3 mb-12 md:mb-16 opacity-0 z-10">
+      <div ref={labelRef} className="relative z-10 flex flex-col items-center gap-3 mb-12 md:mb-16 opacity-0">
         <span className="font-serif text-2xl md:text-3xl text-rose/60 italic">V</span>
         <span className="font-sans text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-stone">
           Kindly Respond
@@ -173,7 +182,7 @@ export default function RSVP({ guest }: { guest?: Guest }) {
                   Thank You!
                 </h3>
                 <p className="font-serif text-lg text-charcoal/70 italic mb-3 max-w-md">
-                  Your response has been saved. We can't wait to celebrate with you!
+                  Your response has been saved. We can&apos;t wait to celebrate with you!
                 </p>
                 <p className="font-sans text-xs text-stone/60 max-w-sm mx-auto">
                   Mark your calendar — {content.weddingDetails.date} at {content.weddingDetails.venue}.

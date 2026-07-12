@@ -1,46 +1,12 @@
 'use client'
-import { useRef, useEffect, useMemo } from 'react'
+import { useRef, useEffect } from 'react'
+import Image from 'next/image'
+import { Canvas } from '@react-three/fiber'
+import GoldenParticles from '@/components/3d/GoldenParticles'
 import { content } from '@/config/content'
 import { revealOnScroll } from '@/lib/animations'
 
-/**
- * CSS Floating Petals — lightweight alternative to Three.js for the hero.
- * Creates random rose petals that drift across the screen.
- */
-function CSSPetals({ count = 20 }: { count?: number }) {
-  const petals = useMemo(() => {
-    const colors = ['#FFB4C2', '#FF8FA3', '#FDA4AF', '#FFC2D1', '#E11D48', '#FB7185']
-    return Array.from({ length: count }, (_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      delay: `${Math.random() * 12}s`,
-      duration: `${8 + Math.random() * 10}s`,
-      size: `${8 + Math.random() * 10}px`,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      opacity: 0.3 + Math.random() * 0.5,
-    }))
-  }, [count])
 
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-[5]">
-      {petals.map((p) => (
-        <div
-          key={p.id}
-          className="petal"
-          style={{
-            left: p.left,
-            width: p.size,
-            height: p.size,
-            backgroundColor: p.color,
-            animationDelay: p.delay,
-            animationDuration: p.duration,
-            opacity: 0,
-          }}
-        />
-      ))}
-    </div>
-  )
-}
 
 export default function Hero() {
   const photoRef = useRef<HTMLDivElement>(null)
@@ -59,13 +25,32 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 md:py-28 overflow-hidden bg-cream">
-      {/* Floating petals background */}
-      <CSSPetals count={18} />
+      {/* 3D Background Sparkles */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+          <GoldenParticles count={150} />
+        </Canvas>
+      </div>
+
 
       {/* Shri Ganesh blessing */}
-      <div ref={blessingRef} className="flex flex-col items-center opacity-0 mb-6 z-10">
-        <p className="font-serif text-xs tracking-[0.25em] uppercase text-rose/60">
-          ॥ श्री गणेशाय नमः ॥
+      <div ref={blessingRef} className="flex flex-col items-center opacity-0 mb-10 z-10 text-center max-w-2xl px-4 mt-8 md:mt-12">
+        <div className="mb-6 relative w-24 h-24 md:w-32 md:h-32">
+          <Image 
+            src="/images/ganesh.png" 
+            alt="Shri Ganesh" 
+            fill 
+            className="object-contain drop-shadow-md"
+            priority
+          />
+        </div>
+        <p className="font-serif text-sm md:text-base leading-relaxed text-rose/80 mb-6 font-medium">
+          ॥ श्री गणेशाय नमः ॥<br/>
+          वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ<br/>
+          निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥
+        </p>
+        <p className="font-serif text-sm md:text-base text-charcoal/70 italic tracking-wide leading-relaxed">
+          With the blessings of Shri Ganesh and our beloved families, we joyfully invite you to celebrate the union of
         </p>
       </div>
 

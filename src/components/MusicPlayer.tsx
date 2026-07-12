@@ -24,12 +24,13 @@ export default function MusicPlayer() {
       audioRef.current.play().catch(() => {
         console.log('Audio autoplay prevented')
       })
-      // Fade in over 3 seconds
+      // Gentle fade in for an aesthetic ambient feel (low volume)
       let vol = 0
+      const targetVol = 0.15 // 15% maximum volume
       const fadeIn = setInterval(() => {
-        vol = Math.min(vol + 0.033, 0.6)
+        vol = Math.min(vol + 0.005, targetVol)
         if (audioRef.current) audioRef.current.volume = vol
-        if (vol >= 0.6) clearInterval(fadeIn)
+        if (vol >= targetVol) clearInterval(fadeIn)
       }, 100)
       return () => clearInterval(fadeIn)
     } else {
