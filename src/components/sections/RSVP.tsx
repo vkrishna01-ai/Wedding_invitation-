@@ -6,6 +6,7 @@ import type { Guest } from '@/config/guests'
 import { content } from '@/config/content'
 import { revealOnScroll } from '@/lib/animations'
 import gsap from 'gsap'
+import { useInView } from 'react-intersection-observer'
 
 export default function RSVP({ guest }: { guest?: Guest }) {
   const sectionRef = useRef<HTMLElement>(null)
@@ -19,6 +20,11 @@ export default function RSVP({ guest }: { guest?: Guest }) {
   const [song, setSong] = useState('')
   const [dietary, setDietary] = useState('No specific preferences')
   const [advice, setAdvice] = useState('')
+
+  const { ref: canvasRef, inView } = useInView({
+    triggerOnce: false,
+    rootMargin: '200px 0px',
+  })
 
   useEffect(() => {
     revealOnScroll(labelRef.current, { y: 15 })
@@ -49,10 +55,12 @@ export default function RSVP({ guest }: { guest?: Guest }) {
       className="relative min-h-screen flex flex-col items-center justify-center py-24 md:py-32 px-4 md:px-8 bg-cream overflow-hidden"
     >
       {/* 3D Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <SacredRSVPScene />
-        </Canvas>
+      <div ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none opacity-40">
+        {inView && (
+          <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 1.5]}>
+            <SacredRSVPScene />
+          </Canvas>
+        )}
       </div>
 
       {/* Chapter label */}

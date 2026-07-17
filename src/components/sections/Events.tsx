@@ -38,12 +38,12 @@ export default function Events() {
       {/* Date badges */}
       <div className="flex flex-wrap items-center justify-center gap-4 mb-12 md:mb-16">
         <div className="flex items-center gap-2 px-5 py-2 rounded-full border border-gold-light/30 bg-warm-white">
-          <span className="font-serif text-sm text-charcoal">Saturday</span>
+          <span className="font-serif text-sm text-charcoal">Sunday</span>
           <span className="text-gold-light">·</span>
           <span className="font-sans text-xs tracking-[0.15em] uppercase text-stone">7 February 2027</span>
         </div>
         <div className="flex items-center gap-2 px-5 py-2 rounded-full border border-gold-light/30 bg-warm-white">
-          <span className="font-serif text-sm text-charcoal">Sunday</span>
+          <span className="font-serif text-sm text-charcoal">Monday</span>
           <span className="text-gold-light">·</span>
           <span className="font-sans text-xs tracking-[0.15em] uppercase text-stone">8 February 2027</span>
         </div>

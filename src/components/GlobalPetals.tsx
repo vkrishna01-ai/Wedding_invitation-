@@ -37,7 +37,11 @@ export default function GlobalPetals({ count = 30 }: { count?: number }) {
       color: colors[Math.floor(Math.random() * colors.length)],
       opacity: 0.3 + Math.random() * 0.5,
     }));
-    setPetals(generated);
+    const timer = setTimeout(() => {
+      setPetals(generated);
+    }, 0);
+    
+    return () => clearTimeout(timer);
   }, [count]);
 
   if (petals.length === 0) return null;

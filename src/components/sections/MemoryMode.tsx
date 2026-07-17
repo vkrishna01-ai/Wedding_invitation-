@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import DivineMandalaRing from '@/components/3d/DivineMandalaRing'
 import { content } from '@/config/content'
 import gsap from 'gsap'
+import { useInView } from 'react-intersection-observer'
 
 export default function Farewell() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -14,6 +15,11 @@ export default function Farewell() {
   const ornamentRef = useRef<HTMLDivElement>(null)
   const familiesRef = useRef<HTMLParagraphElement>(null)
   const coupleRef = useRef<HTMLParagraphElement>(null)
+
+  const { ref: canvasRef, inView } = useInView({
+    triggerOnce: false,
+    rootMargin: '200px 0px',
+  })
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -67,10 +73,12 @@ export default function Farewell() {
       </div>
 
       {/* 3D Glowing Mandala Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-        <Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
-          <DivineMandalaRing />
-        </Canvas>
+      <div ref={canvasRef} className="absolute inset-0 z-0 pointer-events-none opacity-40">
+        {inView && (
+          <Canvas camera={{ position: [0, 0, 3], fov: 50 }} dpr={[1, 1.5]}>
+            <DivineMandalaRing />
+          </Canvas>
+        )}
       </div>
 
       <div className="relative z-10 flex flex-col items-center max-w-2xl">

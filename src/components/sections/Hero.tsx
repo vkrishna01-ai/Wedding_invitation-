@@ -1,143 +1,132 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
-import { Canvas } from '@react-three/fiber'
-import GoldenParticles from '@/components/3d/GoldenParticles'
 import { content } from '@/config/content'
 import { revealOnScroll } from '@/lib/animations'
 
-
-
 export default function Hero() {
-  const photoRef = useRef<HTMLDivElement>(null)
-  const namesRef = useRef<HTMLHeadingElement>(null)
-  const scriptRef = useRef<HTMLParagraphElement>(null)
+  const ganeshRef = useRef<HTMLDivElement>(null)
+  const shlokaRef = useRef<HTMLDivElement>(null)
+  const blessingRef = useRef<HTMLParagraphElement>(null)
+  const namesRef = useRef<HTMLDivElement>(null)
+  const parentsRef = useRef<HTMLDivElement>(null)
   const detailsRef = useRef<HTMLDivElement>(null)
-  const blessingRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    revealOnScroll(blessingRef.current, { delay: 0.2, y: 10, duration: 1.5 })
-    revealOnScroll(photoRef.current, { delay: 0.6, y: 20, duration: 2 })
-    revealOnScroll(scriptRef.current, { delay: 1.2, y: 10, duration: 2 })
-    revealOnScroll(namesRef.current, { delay: 1.8, y: 0, duration: 2.5 })
-    revealOnScroll(detailsRef.current, { delay: 2.8, y: 15, duration: 2 })
+    revealOnScroll(ganeshRef.current, { delay: 0.2, y: 10, duration: 1.8 })
+    revealOnScroll(shlokaRef.current, { delay: 0.6, y: 10, duration: 2 })
+    revealOnScroll(blessingRef.current, { delay: 1.0, y: 10, duration: 2 })
+    revealOnScroll(namesRef.current, { delay: 1.4, y: 0, duration: 2.5 })
+    revealOnScroll(parentsRef.current, { delay: 2.0, y: 10, duration: 2 })
+    revealOnScroll(detailsRef.current, { delay: 2.6, y: 15, duration: 2 })
   }, [])
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 md:py-28 overflow-hidden bg-cream">
-      {/* 3D Background Sparkles */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <GoldenParticles count={150} />
-        </Canvas>
-      </div>
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 py-16 md:py-20 overflow-hidden bg-cream">
+      {/* Subtle CSS background glow effects — replaces heavy 3D Canvas */}
+      <div className="hero-glow hero-glow-1" />
+      <div className="hero-glow hero-glow-2" />
+      <div className="hero-glow hero-glow-3" />
 
-
-      {/* Shri Ganesh blessing */}
-      <div ref={blessingRef} className="flex flex-col items-center opacity-0 mb-10 z-10 text-center max-w-2xl px-4 mt-8 md:mt-12">
-        <div className="mb-6 relative w-24 h-24 md:w-32 md:h-32">
-          <Image 
-            src="/images/ganesh.png" 
-            alt="Shri Ganesh" 
-            fill 
-            className="object-contain drop-shadow-md"
+      {/* ═══ Ganesh Image ═══ */}
+      <div ref={ganeshRef} className="flex flex-col items-center opacity-0 z-10 mb-4">
+        <div className="relative w-20 h-20 md:w-24 md:h-24 ganesh-glow">
+          <Image
+            src="/images/ganesh.png"
+            alt="Shri Ganesh"
+            fill
+            className="object-contain"
             priority
           />
         </div>
-        <p className="font-serif text-sm md:text-base leading-relaxed text-rose/80 mb-6 font-medium">
-          ॥ श्री गणेशाय नमः ॥<br/>
-          वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ<br/>
+      </div>
+
+      {/* ═══ Sanskrit Shloka ═══ */}
+      <div ref={shlokaRef} className="flex flex-col items-center opacity-0 z-10 mb-3 text-center max-w-xl px-4">
+        <p className="font-serif text-sm md:text-base leading-[2] text-rose/80 font-medium tracking-wide">
+          ॥ श्री गणेशाय नमः ॥<br />
+          वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ<br />
           निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥
         </p>
-        <p className="font-serif text-sm md:text-base text-charcoal/70 italic tracking-wide leading-relaxed">
-          With the blessings of Shri Ganesh and our beloved families, we joyfully invite you to celebrate the union of
-        </p>
       </div>
 
-      {/* Couple Photo Frame */}
-      <div
-        ref={photoRef}
-        className="relative z-10 w-[280px] h-[360px] md:w-[340px] md:h-[440px] lg:w-[380px] lg:h-[480px] mb-8 opacity-0"
-      >
-        {/* Photo placeholder with gradient overlay */}
-        <div
-          className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
-          style={{
-            background: 'linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 30%, #FECDD3 60%, #FFE4E6 100%)',
-            boxShadow: '0 20px 60px rgba(225, 29, 72, 0.12), 0 4px 20px rgba(0,0,0,0.06)',
-          }}
-        >
-          {/* Decorative couple silhouette area */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-7xl md:text-8xl opacity-20">💑</span>
-            <p className="font-sans text-[9px] tracking-[0.2em] uppercase text-rose/40 mt-4">
-              Your photo here
-            </p>
-          </div>
-
-          {/* Subtle inner border */}
-          <div className="absolute inset-3 rounded-xl border border-white/40 pointer-events-none" />
-        </div>
-
-        {/* Decorative frame corner accents */}
-        <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-rose/20 rounded-tl-md" />
-        <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-rose/20 rounded-tr-md" />
-        <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-rose/20 rounded-bl-md" />
-        <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-rose/20 rounded-br-md" />
+      {/* ═══ Ornamental Divider ═══ */}
+      <div className="ornament-divider z-10 mb-4">
+        <span className="ornament-icon">✦</span>
       </div>
 
-      {/* "Forever" script text */}
+      {/* ═══ Blessing Text ═══ */}
       <p
-        ref={scriptRef}
-        className="font-script text-4xl md:text-5xl lg:text-6xl text-rose/70 z-10 mb-4 opacity-0"
+        ref={blessingRef}
+        className="font-serif text-sm md:text-base text-charcoal/65 italic tracking-wide leading-relaxed text-center max-w-lg px-4 z-10 mb-6 opacity-0"
       >
-        Forever Us
+        With the blessings of Shri Ganesh and our beloved families,
+        we joyfully invite you to celebrate the union of
       </p>
 
-      {/* Couple Names */}
-      <h1
-        ref={namesRef}
-        className="font-serif font-light text-center leading-[1.15] z-10 mb-6 opacity-0"
-        style={{ fontSize: 'clamp(2rem, 7vw, 5rem)', letterSpacing: '0.08em' }}
-      >
-        <span className="block uppercase text-charcoal">
-          {content.couple.groom.split(' ')[0]}
-        </span>
-        <span
-          className="block font-script my-3 md:my-5 text-rose/60"
-          style={{ fontSize: '0.5em', letterSpacing: '0.02em' }}
+      {/* ═══ Couple Names — The Star ═══ */}
+      <div ref={namesRef} className="z-10 mb-4 opacity-0">
+        <h1
+          className="font-serif font-light text-center leading-[1.1]"
+          style={{ fontSize: 'clamp(2.5rem, 9vw, 6rem)', letterSpacing: '0.08em' }}
         >
-          &amp;
-        </span>
-        <span className="block uppercase text-charcoal">
-          {content.couple.bride.split(' ')[0]}
-        </span>
-      </h1>
+          <span className="block uppercase text-charcoal">
+            {content.couple.groom.split(' ')[0]}
+          </span>
+          <span
+            className="couple-ampersand my-2 md:my-4"
+            style={{ fontSize: '0.4em', letterSpacing: '0.02em' }}
+          >
+            &amp;
+          </span>
+          <span className="block uppercase text-charcoal">
+            {content.couple.bride.split(' ')[0]}
+          </span>
+        </h1>
+      </div>
 
-      {/* Rose divider */}
-      <div className="rose-line w-20 mb-6 z-10" />
+      {/* ═══ Parents' Names ═══ */}
+      <div ref={parentsRef} className="z-10 mb-6 opacity-0 text-center max-w-2xl px-4">
+        <div className="parents-row">
+          <p className="font-serif text-xs md:text-sm text-charcoal/55 italic leading-relaxed">
+            Son of {content.family.groom.parents[0]} &amp; {content.family.groom.parents[1]}
+          </p>
+          <span className="parents-divider">♡</span>
+          <p className="font-serif text-xs md:text-sm text-charcoal/55 italic leading-relaxed">
+            Daughter of {content.family.bride.parents[0]} &amp; {content.family.bride.parents[1]}
+          </p>
+        </div>
+      </div>
 
-      {/* Date & Location */}
-      <div ref={detailsRef} className="flex flex-col items-center gap-2 z-10 opacity-0">
-        <p className="font-sans text-[10px] md:text-xs tracking-[0.25em] uppercase text-stone">
+      {/* ═══ Ornamental Divider ═══ */}
+      <div className="ornament-divider z-10 mb-6">
+        <span className="ornament-icon">❀</span>
+      </div>
+
+      {/* ═══ Date & Venue ═══ */}
+      <div ref={detailsRef} className="flex flex-col items-center gap-3 z-10 opacity-0">
+        <p className="font-sans text-[10px] md:text-xs tracking-[0.3em] uppercase text-stone/70">
           {content.invitation.prefix}
         </p>
         <p
           className="font-serif font-light uppercase tracking-[0.15em] text-charcoal/80"
-          style={{ fontSize: 'clamp(0.875rem, 2vw, 1.2rem)' }}
+          style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.3rem)' }}
         >
           {content.weddingDetails.dateWritten.day}
         </p>
-        <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-stone/60">
+        <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-stone/50">
           {content.weddingDetails.dateWritten.year}
         </p>
-        <div className="rose-line w-8 my-2" />
-        <p className="font-serif text-base md:text-lg text-charcoal/60 italic">
+        <div className="rose-line w-10 my-1" />
+        <p className="font-serif text-base md:text-lg text-charcoal/55 italic">
+          {content.weddingDetails.venue}
+        </p>
+        <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-stone/40">
           {content.weddingDetails.city}, {content.weddingDetails.state}
         </p>
       </div>
 
-      {/* Scroll hint */}
+      {/* ═══ Scroll Hint ═══ */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
         <div className="flex flex-col items-center gap-2" style={{ animation: 'gentleBounce 3s ease-in-out infinite' }}>
           <span className="font-sans text-[8px] tracking-[0.3em] uppercase text-stone/40">
